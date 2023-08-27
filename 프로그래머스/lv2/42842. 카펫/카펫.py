@@ -1,20 +1,15 @@
 def solution(brown, yellow):
     answer = []
     
-    # total == a*b
-    # brwon == 2a * 2b -4
-    # yellow == (a-2) * (b-2)
-    
     total = brown + yellow      
     
-    for b in range(1,total+1):
-        if total % b == 0:
-            a = total / b
-            if a >= b:                     
-                if 2*a + 2*b == brown + 4:  
-                    return [a,b]
-            
-    
-    
-        
+    for x in range(1,total+1):
+        if total % x == 0:
+            y = total / x
+            if x >= y:             
+                if yellow == (x-2) * (y-2):
+                    answer.append(x)
+                    answer.append(y)
+                    break
+                    
     return answer
