@@ -1,19 +1,18 @@
 #include <cstdio>
-#include <vector>
-using namespace std;
-
+#include <cmath> // 추가: sqrt 사용을 위해
 const int MAX = 1000000;
-vector<int> prime;
-bool check[MAX + 1];
+int prime[MAX]; // 소수를 저장할 배열
+int pn; // 소수 개수
+bool check[MAX + 1]; // 소수 체크 배열
 
 int main() {
+    // 에라토스테네스의 체를 이용하여 소수 찾기
     for (int i = 2; i <= MAX; i++) {
-        if (!check[i]) {
-            prime.push_back(i);  // 벡터에 소수 추가
-            if (1LL * i * i <= MAX) { // i * i가 MAX 범위 안에 있는지 확인
-                for (int j = i * i; j <= MAX; j += i) {
-                    check[j] = true;
-                }
+        if (!check[i]) { // 소수인 경우
+            prime[pn++] = i; // 소수 배열에 추가
+            // long long을 사용하여 i * i의 오버플로우 방지
+            for (long long j = (long long)i * i; j <= MAX; j += i) {
+                check[j] = true; // 배수는 소수가 아님
             }
         }
     }
@@ -22,20 +21,18 @@ int main() {
         int n;
         scanf("%d", &n);
         if (n == 0) {
-            break;
+            break; // 입력이 0이면 종료
         }
 
-        bool found = false;
-        for (int i = 1; i < prime.size() && prime[i] < n; i++) { // prime[i] < n 조건 추가
-            if (!check[n - prime[i]]) {
-                printf("%d = %d + %d\n", n, prime[i], n - prime[i]);
-                found = true;
-                break;
+        // 짝수 n을 두 소수의 합으로 표현
+        for (int i = 0; i < pn; i++) {
+            if (prime[i] > n) {
+                break; // prime[i]가 n보다 크면 종료
             }
-        }
-
-        if (!found) {
-            printf("Goldbach's conjecture is wrong.\n");
+            if (!check[n - prime[i]]) { // n - prime[i]가 소수인지 확인
+                printf("%d = %d + %d\n", n, prime[i], n - prime[i]);
+                break; // 첫 번째 쌍을 찾으면 종료
+            }
         }
     }
 
