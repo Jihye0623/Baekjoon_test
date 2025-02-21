@@ -1,5 +1,4 @@
-import sys
-input = sys.stdin.readline
+
 
 def go(sum, goal):
     if sum > goal:
