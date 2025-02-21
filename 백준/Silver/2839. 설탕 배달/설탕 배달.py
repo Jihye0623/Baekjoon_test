@@ -1,3 +1,5 @@
+import sys
+sys.setrecursionlimit(10**6) 
 INF = 1234567890
 
 def solve(i, d):
