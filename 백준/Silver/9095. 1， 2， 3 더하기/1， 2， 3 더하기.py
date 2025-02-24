@@ -1,5 +1,4 @@
 
-
 def go(sum, goal):
     if sum > goal:
         return
@@ -8,8 +7,6 @@ def go(sum, goal):
         global answer
         answer += 1
         return
-
-    now = 0
 
     for i in range(1, 4):
         go(sum + i, goal)
