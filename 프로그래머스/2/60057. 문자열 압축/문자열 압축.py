@@ -1,18 +1,18 @@
 def solution(s):
     answer = len(s)
     
-    for step in range(1,len(s)//2+1):
-        compressed=""
-        prev = s[0:step]
-        count = 1
-        for j in range(step, len(s), step):
-            if prev == s[j:j+step]:
-                count+=1
+    for i in range(1, len(s)//2+1):
+        string = ''
+        cnt = 1
+        for j in range(0, len(s), i):
+            if s[j:j+i] == s[j+i:j+i+i]:
+                cnt += 1
             else:
-                compressed += str(count) + prev if count >= 2 else prev
-                prev = s[j:j+step]
-                count = 1
-        compressed += str(count) + prev if count>= 2 else prev
-        answer = min(answer, len(compressed))
-        
+                if cnt>1:
+                    string+=(str(cnt)+s[j:j+i])
+                else:
+                    string+=s[j:j+i]
+                cnt = 1
+        if len(string)<answer:
+            answer=len(string)
     return answer
