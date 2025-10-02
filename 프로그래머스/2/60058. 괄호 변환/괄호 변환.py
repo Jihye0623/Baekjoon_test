@@ -1,47 +1,40 @@
-# https://school.programmers.co.kr/learn/courses/30/lessons/60058
+def step3(p):
+    for i in range(2,len(p)+1):
+        string = p[:i]
+        if string.count('(') == string.count(')'):
+            u = string
+            v = p[i:]
+            break
+    return u,v
 
-# 균형 잡힌 괄호 문자열의 인덱스 반환
-def balanced_index(p):
-    count = 0 # 왼쪽 괄호의 개수
-    for i in range(len(p)):
-        if p[i] == '(':
-            count += 1
+def check(string):
+    stack = []
+    for s in string:
+        if s=='(':
+            stack.append(s)
         else:
-            count -= 1
-        if count == 0:
-            return i
-        
-def check_proper(p):
-    count = 0 # 왼쪽 괄호의 개수
-    for i in p:
-        if i == '(':
-            count += 1
-        else:
-            if count == 0:
+            if len(stack)==0:
                 return False
-            count -= 1
+            stack.pop()
+    if len(stack): return False
     return True
 
-def solution(p):
-    answer = ''
+def solution(p):    
     if p == '':
-        return answer
-    index = balanced_index(p)
-    u = p[:index+1]
-    v = p[index+1:]
+        return p
     
-    # 올바른 괄호 문자열이면 재귀적
-    if check_proper(u):
-        answer = u + solution(v)
+    temp = ''
+    u,v = step3(p)
+    if check(u):
+        temp += u + solution(v)
     else:
-        answer = '('
-        answer += solution(v)
-        answer += ')'
-        u = list(u[1:-1]) # 첫번째와 마지막 문자 제거
-        for i in range(len(u)):
-            if u[i] == '(':
-                u[i] = ')'
+        temp += '('
+        temp += solution(v)
+        temp += ')'
+        tu = u[1:-1]
+        for t in tu:
+            if t==')':
+                temp+='('
             else:
-                u[i] = '('
-        answer += "".join(u)
-    return answer
+                temp+=')'
+    return temp
