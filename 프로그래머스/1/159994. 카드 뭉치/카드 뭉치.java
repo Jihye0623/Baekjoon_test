@@ -2,24 +2,40 @@ import java.util.*;
 
 class Solution {
     public String solution(String[] cards1, String[] cards2, String[] goal) {
-        ArrayDeque<String> cardsDeque1 = new ArrayDeque<>(Arrays.asList(cards1));
-        ArrayDeque<String> cardsDeque2 = new ArrayDeque<>(Arrays.asList(cards2));
-        ArrayDeque<String> goalDeque = new ArrayDeque<>(Arrays.asList(goal));
+        ArrayDeque<String> c1 = new ArrayDeque<>(Arrays.asList(cards1));
+        ArrayDeque<String> c2 = new ArrayDeque<>(Arrays.asList(cards2));
+        ArrayDeque<String> g = new ArrayDeque<>(Arrays.asList(goal));
         
-        while(!goalDeque.isEmpty()){
-            if(!cardsDeque1.isEmpty() && cardsDeque1.peekFirst().equals(goalDeque.peekFirst())){
-                cardsDeque1.pollFirst();
-                goalDeque.pollFirst();
+        while(!c1.isEmpty() && !c2.isEmpty() && !g.isEmpty()){
+            if(c1.peekFirst().equals(g.peekFirst())){
+                g.pollFirst();
+                c1.pollFirst();
+            } 
+            else if(c2.peekFirst().equals(g.peekFirst())){
+                g.pollFirst();
+                c2.pollFirst();
             }
-            else if(!cardsDeque2.isEmpty() && cardsDeque2.peekFirst().equals(goalDeque.peekFirst())){
-                cardsDeque2.pollFirst();
-                goalDeque.pollFirst();
-            }
+        }
+        while(!g.isEmpty()&&!c1.isEmpty()){
+            if(c1.peekFirst().equals(g.peekFirst())){
+                g.pollFirst();
+                c1.pollFirst();
+            } 
             else{
                 break;
             }
         }
         
-        return goalDeque.isEmpty()? "Yes":"No";
+          while(!g.isEmpty() && !c2.isEmpty()){
+            if(c2.peekFirst().equals(g.peekFirst())){
+                g.pollFirst();
+                c2.pollFirst();
+            } 
+            else{
+                break;
+            }
+        }
+        
+        return g.isEmpty()? "Yes":"No";
     }
 }
