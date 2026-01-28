@@ -1,32 +1,41 @@
 import java.util.*;
-import java.util.stream.Stream;
 
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
-        HashMap<String, ArrayList<int[]>> genreMap = new HashMap<>();
-        HashMap<String, Integer> playMap = new HashMap<>();
+        HashMap<String, Integer> genreTop = new HashMap<>();
+        HashMap<String, ArrayList<int[]>> playTop = new HashMap<>();
         
-        for(int i = 0; i<genres.length; i++){
-            String genre = genres[i];
-            int play = plays[i];
-            if(!genreMap.containsKey(genre)){
-                genreMap.put(genre, new ArrayList<>());
-                playMap.put(genre, 0);
+        for(int i = 0; i<plays.length; i++){
+            String g = genres[i];
+            int p = plays[i];
+            genreTop.put(g, genreTop.getOrDefault(g,0)+p);
+            if(!playTop.containsKey(g)){
+                playTop.put(g, new ArrayList<>());
             }
-            genreMap.get(genre).add(new int[]{i,play});
-            playMap.put(genre, playMap.get(genre)+play);
+            ArrayList<int[]> tempList = playTop.get(g);
+            tempList.add(new int[]{i, p});
+            playTop.put(g, tempList);
         }
         
+        ArrayList<String> keyList = new ArrayList<>(genreTop.keySet());
+        Collections.sort(keyList, new Comparator<String>(){
+            @Override
+            public int compare(String s1, String s2){
+                Integer o1 = genreTop.get(s1);
+                Integer o2 = genreTop.get(s2);
+                return Integer.compare(o2,o1);
+            }
+        });
         ArrayList<Integer> answer = new ArrayList<>();
         
-        Stream<Map.Entry<String, Integer>> sortedGenre = playMap.entrySet().stream().sorted((o1,o2)-> Integer.compare(o2.getValue(), o1.getValue()));
-        
-        sortedGenre.forEach(entry->{
-            Stream<int[]> sortedSongs = genreMap.get(entry.getKey()).stream()
-                .sorted((o1,o2)->Integer.compare(o2[1],o1[1]))
-                .limit(2);
-            sortedSongs.forEach(song -> answer.add(song[0]));
-        });
+        for(String key:keyList){
+            ArrayList<int[]> songs = playTop.get(key);
+            int n = songs.size()>2? 2:songs.size();
+            Collections.sort(songs, (o1,o2)-> Integer.compare(o1[1],o2[1])==0? Integer.compare(o1[0],o2[0]):Integer.compare(o2[1], o1[1]));
+            for(int i = 0; i<n; i++){
+                answer.add(songs.get(i)[0]);
+            }
+        }
         
         return answer.stream().mapToInt(Integer::intValue).toArray();
     }
