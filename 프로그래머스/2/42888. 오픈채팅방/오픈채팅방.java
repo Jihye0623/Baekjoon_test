@@ -2,26 +2,30 @@ import java.util.*;
 
 class Solution {
     public String[] solution(String[] record) {
-        HashMap<String, String> msg = new HashMap<>();
-        msg.put("Enter", "님이 들어왔습니다.");
-        msg.put("Leave", "님이 나갔습니다.");
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Enter", "님이 들어왔습니다.");
+        map.put("Leave", "님이 나갔습니다.");
         
-        HashMap<String, String> uid = new HashMap<>();
-        for(String s:record){
-            String[] cmd = s.split(" ");
-            if(cmd.length==3){
-                uid.put(cmd[1], cmd[2]);
+        HashMap<String, String> userId = new HashMap<>();        
+        for(String rec:record){
+            String[] temp = rec.split(" ");
+            if(temp.length==3){
+                userId.put(temp[1], temp[2]);
+            }
+        }
+        ArrayList<String> result = new ArrayList<>();
+        for(String rec:record){
+            String[] temp = rec.split(" ");
+            if(map.containsKey(temp[0])){
+                result.add(userId.get(temp[1])+map.get(temp[0]));
             }
         }
         
-        ArrayList<String> answer = new ArrayList<>();
-        for(String s:record){
-            String[] cmd = s.split(" ");
-            if(msg.containsKey(cmd[0])){
-                answer.add(uid.get(cmd[1]) + msg.get(cmd[0]));
-            }
+        String[] answer=  new String[result.size()];
+        for(int i = 0; i<result.size(); i++){
+            answer[i] = result.get(i);
         }
         
-        return answer.toArray(new String[0]);
+        return answer;
     }
 }
