@@ -5,19 +5,24 @@ class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        String n = st.nextToken();
+		String str = st.nextToken();
         int b = Integer.parseInt(st.nextToken());
         
         int answer = 0;
-        for(char c:n.toCharArray()){
-            int num;
-            if('A'<=c && c<='Z') num = (int)(c-'A') + 10;
-            else num = (int)(c-'0');
-            answer = answer*b + num;
+        int n = 0;
+        for(int i = str.length()-1; i>=0; i--){
+            char c = str.charAt(i);
+            if(Character.isDigit(c)){
+                int temp = (int)(c-'0');
+                answer += temp * (int)Math.pow(b,n++);
+            }
+            else{
+                int temp = (int)(c-'A') + 10;
+                answer += temp * (int)Math.pow(b,n++);
+            }
         }
         
-        
         System.out.println(answer);
-        
+            
     }
 }
