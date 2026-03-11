@@ -6,15 +6,20 @@ class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
         
-        int num = 666;
-        int count = 1;
-        
-        while(count!=n){
-            num++;
-            if(String.valueOf(num).contains("666")) count++;
+        int idx = 0;
+        int temp = 665;
+        while(true){
+            if(idx==n) break;
+            while(true){
+                temp++;
+                if(String.valueOf(temp).contains("666")) break;
+                
+            }
+            idx++;
+            
         }
         
-        System.out.println(num);
         
+        System.out.println(temp);
     }
 }
