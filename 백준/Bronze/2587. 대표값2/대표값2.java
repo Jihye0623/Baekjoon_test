@@ -3,18 +3,19 @@ import java.io.*;
 
 class Main{
     public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<Integer> arr = new ArrayList<>();
-        int total = 0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));       
+        int[] arr = new int[5];
+        
         for(int i = 0; i<5; i++){
-            int s = Integer.parseInt(br.readLine());
-            total += s;
-            arr.add(s);
+            arr[i] = Integer.parseInt(br.readLine());
         }
         
-        Collections.sort(arr);
-        System.out.println(total/5);
-        System.out.println(arr.get(2));
+        Arrays.sort(arr);
+        int sum = 0;
+        for(int i : arr) sum += i;
         
+        System.out.println(sum/5);
+        System.out.println(arr[2]);
+    
     }
 }
