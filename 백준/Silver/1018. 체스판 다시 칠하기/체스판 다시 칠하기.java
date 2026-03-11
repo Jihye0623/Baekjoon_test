@@ -1,46 +1,50 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 class Main{
-
-    public static int getMinCost(int startrow, int startcol, String[] board){
-        String[] map = {"WBWBWBWB","BWBWBWBW"};
-
-        int whiteVerCount = 0;
-
+    private static String[] answer = {"WBWBWBWB", "BWBWBWBW"};
+    private static String[] map;
+    private static int result; 
+    
+    private static void check(int x, int y){
+        int cnt = 0;
+        
+      
         for(int i = 0; i<8; i++){
-            int row = startrow + i;
+            int rowPattern = i%2;
             for(int j = 0; j<8; j++){
-                int col = startcol + j;
-
-                if(board[row].charAt(col) != map[row%2].charAt(j)){
-                    whiteVerCount++;
+                if(map[x+i].charAt(y+j)!=answer[rowPattern].charAt(j)){
+                    cnt++;
                 }
             }
         }
 
-        return Math.min(whiteVerCount, 64-whiteVerCount);
+        cnt = Math.min(64-cnt, cnt);
+        
+        result = Math.min(result, cnt);
     }
     
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        String[] board = new String[n];
-
-        for(int i = 0; i<n; i++){
-            board[i] = br.readLine();
+        
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        
+        map = new String[N];
+        result = Integer.MAX_VALUE;
+        
+        for(int i = 0; i<N; i++){
+            map[i] = br.readLine();    
         }
         
-        int count = Integer.MAX_VALUE;
-        for(int i=0; i<=n-8; i++){
-            for(int j=0; j<=m-8; j++){
-                int resultCount = getMinCost(i,j,board);
-                if(count>resultCount)
-                    count = resultCount;
+        for(int i = 0; i<=N-8; i++){
+            for(int j = 0; j<=M-8; j++){
+                check(i,j);    
             }
         }
-        System.out.println(count);
+        
+        
+        System.out.println(result);
     }
 }
