@@ -3,18 +3,21 @@ import java.io.*;
 
 class Main{
     public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));       
         StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
         
+        
+        int[] arr = new int[n];
+        
         st = new StringTokenizer(br.readLine());
-        ArrayList<Integer> arr = new ArrayList<>();
-        for(int i = 0 ; i<n; i++){
-            arr.add(Integer.parseInt(st.nextToken()));
+        for(int i = 0; i<n; i++){
+            arr[i] = Integer.parseInt(st.nextToken());
         }
         
-        Collections.sort(arr, Collections.reverseOrder());
-        System.out.println(arr.get(k-1));
+        Arrays.sort(arr);
+        System.out.println(arr[arr.length-k]);
+    
     }
 }
