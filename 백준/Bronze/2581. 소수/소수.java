@@ -4,28 +4,32 @@ import java.io.*;
 class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int m = Integer.parseInt(br.readLine());
-        int n = Integer.parseInt(br.readLine());
-        ArrayList<Integer> list = new ArrayList<>();
-        
-        for(int i = m; i<=n; i++){
-            int flag = 1;
-            for(int j = 2; j*j<=i; j++){
+        int M = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
+
+        int sum = 0;
+        int min = 0;
+
+        for(int i = M; i<=N; i++){
+            if(i==1) continue;
+            boolean flag = true;
+            for(int j = 2; j<i; j++){
                 if(i%j==0){
-                    flag = 0;
+                    flag = false;
                     break;
                 }
             }
             
-            if(i!=1 && flag==1) list.add(i);
-        }
-        if(list.size()==0) System.out.println(-1);
-        else{
-            int total = 0;
-            for(int i:list) total+= i;
-            System.out.println(total);
-            System.out.println(Collections.min(list));   
+            if(flag) {
+                if(sum==0) min = i;
+                sum += i;
+            }
         }
         
+        if(sum == 0) System.out.println(-1);
+        else {
+            System.out.println(sum);
+            System.out.println(min);
+        }
     }
 }
