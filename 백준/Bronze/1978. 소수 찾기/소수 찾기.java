@@ -4,24 +4,24 @@ import java.io.*;
 class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
         int n = Integer.parseInt(br.readLine());
+        int answer = 0;
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        
-        int cnt = 0;
-        for(int i = 0; i<n; i++){
+		for(int i = 0; i<n; i++){
+            boolean flag = true;
             int k = Integer.parseInt(st.nextToken());
-            
-            int flag = 1;
-            for(int j = 2; j*j<=k; j++){
-                if(k%j==0) {
-                    flag = 0;
+            if(k==1) continue;
+            for(int j=2;j<k;j++){
+                if(k%j==0){
+                    flag = false;
                     break;
                 }
             }
-            if(k!=1 && flag==1) cnt++;
+            if(flag) answer++;
         }
-		
-        System.out.println(cnt);
+        
+                
+        System.out.println(answer);
     }
 }
