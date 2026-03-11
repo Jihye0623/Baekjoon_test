@@ -5,15 +5,23 @@ class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());    
-		int k = Integer.parseInt(st.nextToken());   
-        ArrayList<Integer> list = new ArrayList<>();
+		int N = Integer.parseInt(st.nextToken());    
+		int K = Integer.parseInt(st.nextToken());    
         
-        for(int i = 1; i<=n;i++){
-            if(n%i==0) list.add(i);
+        int answer = 0;
+        int j = 0;
+        for(int i = 1; i<=N; i++){
+            if(N%i==0){
+                j++;
+                if(j==K){
+                    answer = i;
+                    break;
+                }
+            }
         }
-
-        if(list.size()<k) System.out.println(0);
-        else System.out.println(list.get(k-1));
+        
+        
+        System.out.println(answer);
+        
     }
 }
