@@ -6,22 +6,24 @@ class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
         
-        StringTokenizer st;
-        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
-        int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
-		for(int i = 0; i<n; i++){
-            st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
-            if(x<minX) minX = x;
-            if(x>maxX) maxX = x;
-            if(y<minY) minY = y;
-            if(y>maxY) maxY = y;
+        if(n==1) {
+            System.out.println(0);
+            return;
         }
         
-        System.out.println((maxX-minX)*(maxY-minY));
+        int minX = 10001, minY = 10001, maxX = -10001, maxY = -10001;
         
+        for(int i = 0; i<n; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+        }
         
-        
+        int answer = (maxX - minX) * (maxY - minY);
+        System.out.println(answer);
     }
 }
