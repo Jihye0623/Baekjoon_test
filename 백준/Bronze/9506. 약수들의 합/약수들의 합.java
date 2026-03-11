@@ -4,35 +4,29 @@ import java.io.*;
 class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
         StringBuilder sb = new StringBuilder();
-
+        
         while(true){
+            ArrayList<Integer> arr = new ArrayList<>();
             int n = Integer.parseInt(br.readLine());
-            if(n == -1) break;
+            if(n==-1) break;
             
-            ArrayList<Integer> list = new ArrayList<>();
-            for(int i = 1; i<n;i++){
-                if(n%i==0) list.add(i);
+            for(int i = 1; i<n; i++){
+                if(n%i==0) arr.add(i);
             }
-            int total = 0;
-            for(int i:list){
-                total += i;
-            }
-            if(total==n) {
+            int sum = 0;
+            for(int i:arr) sum += i;
+            if(sum==n){
                 sb.append(n).append(" = ");
-                for(int i = 0; i<list.size()-1; i++){
-                    sb.append(list.get(i)).append(" + ");
-                }
-                sb.append(list.get(list.size()-1)).append("\n");
+                for(int i = 0; i<arr.size()-1; i++) sb.append(arr.get(i)).append(" + ");
+                sb.append(arr.get(arr.size()-1));
             }
             else{
-                sb.append(n).append(" is NOT perfect.").append("\n");
+                sb.append(n).append(" is NOT perfect.");
             }
-            
-        }        
-
-        System.out.println(sb.toString());
-
+            sb.append("\n");
+        }
+        
+        System.out.println(sb);
     }
 }
