@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 54948 KB, 시간: 376 ms
+메모리: 54816 KB, 시간: 460 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2026년 2월 13일 09:50:11
+2026년 3월 12일 09:11:37
 
 ### 문제 설명
 
@@ -114,7 +114,7 @@
 
 <p><img alt="" src="https://www.acmicpc.net/upload/201004/ph.PNG" style="height:184px; width:274px"></p>
 
-<p><img alt="" src="https://www.acmicpc.net/upload/201004/pi.PNG" style="height:184px; width:274px"></p>
+<p><img alt="" src="" style="height:184px; width:274px"></p>
 
 <p>이다솜 : 휴... 이겼다.</p>
 

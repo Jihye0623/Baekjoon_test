@@ -6,29 +6,24 @@ class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
         
         HashMap<Integer, String> numMap = new HashMap<>();
-        HashMap<String, Integer> strMap = new HashMap<>();
-        
+        HashMap<String, Integer> nameMap = new HashMap<>();
         for(int i = 1; i<=n; i++){
             String name = br.readLine();
             numMap.put(i, name);
-            strMap.put(name, i);
+            nameMap.put(name, i);
         }
         
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i<m; i++){
+        for(int i = 0; i<m; i++){
             String find = br.readLine();
-            if(!Character.isDigit(find.charAt(0))){
-                sb.append(strMap.get(find)).append("\n");
-            }
-            else{
-                int num = Integer.parseInt(find);
-                sb.append(numMap.get(num)).append("\n");
-            }
+            if(Character.isDigit(find.charAt(0))) sb.append(numMap.get(Integer.parseInt(find)));
+            else sb.append(nameMap.get(find));
+            sb.append("\n");
         }
         
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 }
