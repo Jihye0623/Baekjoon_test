@@ -1,41 +1,46 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 class Main{
-    public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        HashMap<Character, Character> map = new HashMap<>();
-        map.put(')','(');
-        map.put(']','[');
-        StringBuilder sb = new StringBuilder();  
-                      
-        while(true){
-            String temp = br.readLine();
-            if(temp.equals(".")) break;
+    public static void main(String[] args)throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));        
 
+        HashMap<Character, Character> map = new HashMap<>();
+        map.put(']', '[');
+        map.put(')','(');
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while(true){
             Stack<Character> stack = new Stack<>();
-            int flag = 0;
-            for(int i = 0; i<temp.length(); i++){
-                char c = temp.charAt(i);
-                if (c=='('||c==')'||c=='['||c==']'){
-                    if(map.containsKey(c)){
-                        if(!stack.isEmpty() && stack.peek() == map.get(c)) stack.pop();
-                        else{
-                            flag = 1;
+            String str = br.readLine();
+            if(str.charAt(0) == '.') break;
+            
+            boolean flag = true;
+            
+            for(int j = 0; j<str.length(); j++){
+                char c = str.charAt(j);
+                if(c=='(' || c=='[') 
+                    stack.push(c);
+                else if(map.containsKey(c)){
+                    if(stack.isEmpty()) {
+                        flag = false;
+                        break;
+                    }
+                    else {
+                        if(stack.pop()!=map.get(c)) {
+                            flag = false;
                             break;
                         }
                     }
-                    else{
-                        stack.push(c);
-                    }
                 }
-                else continue;
             }
-            if(!stack.isEmpty() || flag == 1) sb.append("no");
-            else sb.append("yes");
-            sb.append("\n");
+
+            if(!flag || !stack.isEmpty()) sb.append("no\n");
+            else sb.append("yes\n");
         }
-        
-        System.out.println(sb.toString());
+
+        System.out.println(sb);
+
     }
 }
