@@ -8,18 +8,19 @@ class Main{
     }
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int ax = Integer.parseInt(st.nextToken());
-        int ay = Integer.parseInt(st.nextToken());
-        
+        int x1 = Integer.parseInt(st.nextToken());
+        int y1 = Integer.parseInt(st.nextToken());
+
         st = new StringTokenizer(br.readLine());
-        int bx = Integer.parseInt(st.nextToken());
-        int by = Integer.parseInt(st.nextToken());
-        
-        int x = ax*by + bx*ay;
-        int y = ay*by;
-        
-        int g = gcd(x,y);
-        System.out.println(x/g + " " +y/g);
+        int x2 = Integer.parseInt(st.nextToken());
+        int y2 = Integer.parseInt(st.nextToken());
+
+        int X = y2*x1 + y1*x2;
+        int Y = y1*y2;
+
+        int g = gcd(Y,X);
+        System.out.println(X/g + " " + Y/g);
     }
 }
