@@ -6,16 +6,13 @@ class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str = br.readLine();
         HashSet<String> set = new HashSet<>();
-        
+
         for(int i = 0; i<str.length(); i++){
-            String temp = "";
-            for(int j = i; j<str.length(); j++){
-                temp += str.charAt(j);
-                set.add(temp);
+            for(int j = i+1; j<=str.length(); j++){
+                set.add(str.substring(i,j));
             }
         }
         
         System.out.println(set.size());
-        
     }
 }
