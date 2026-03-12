@@ -2,12 +2,16 @@ import java.util.*;
 import java.io.*;
 
 class Main{
-    private static boolean isValid(long k){
+    
+    private static boolean check(long k){
+        if(k<=1) return false;
         for(long i = 2; i*i<=k; i++){
             if(k%i==0) return false;
         }
+        
         return true;
     }
+    
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
@@ -16,17 +20,13 @@ class Main{
         for(int i = 0; i<n; i++){
             long k = Long.parseLong(br.readLine());
             while(true){
-                if(k<=2) {
-                    k=2;
-                    break;
-                }
-                if(isValid(k)) break;
+                if(check(k)) break;
                 k++;
             }
             sb.append(k).append("\n");
         }
         
-        System.out.println(sb.toString());
+        System.out.println(sb);
 		    
     }
 }
