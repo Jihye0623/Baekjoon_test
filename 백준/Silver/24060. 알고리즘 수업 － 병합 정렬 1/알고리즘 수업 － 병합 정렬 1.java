@@ -2,66 +2,56 @@ import java.util.*;
 import java.io.*;
 
 class Main{
-    private static int result = -1;
-    private static int cnt = 0;
-    private static int K;
     private static int[] temp;
-
-    private static void merge_sort(int[] A, int p, int r){
-        if(p<r){
-            int q = (p+r)/2;
-            merge_sort(A, p, q);
-            merge_sort(A, q+1, r);
-            merge(A, p, q, r);
+    private static int cnt = 0, k, answer;
+    
+    
+    private static void merge_sort(int[] a, int p, int r){
+        if(p<r) {
+            int q= (p+r)/2;
+            merge_sort(a, p,q);
+            merge_sort(a, q+1, r);
+            merge(a, p, q, r);
         }
     }
     
-    private static void merge(int[] A, int p, int q, int r){
-        int i = p;
-        int j = q + 1;
-        int t = 0;
-        
-        while(i<=q && j <= r){
-            if(A[i]<=A[j]){
-                temp[t++] = A[i++];
-            }
-            else{
-                temp[t++] = A[j++];
-            }
+    private static void merge(int[] a, int p, int q, int r){
+        int i = p, j = q+1, t=0;
+        while(i<=q && j<=r){
+            if(a[i]<=a[j]) temp[t++] = a[i++];
+            else temp[t++] = a[j++];
         }
-        
-        while(i<=q) temp[t++] = A[i++];
-        while(j<=r) temp[t++] = A[j++];
+        while(i<=q) temp[t++] = a[i++];
+        while(j<=r) temp[t++] = a[j++];
         i = p;
         t = 0;
-        while(i<=r){
-            
-            A[i++] = temp[t++];
+        while(i<=r) {
+            a[i++] = temp[t++];
             cnt++;
-            
-            if(cnt==K){
-                result = A[i-1];
+            if(cnt == k) {
+                answer = a[--i];
+                break;
             }
-            
-            
-        } 
+        };
     }
     
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        
+        int[] a = new int[n];
+        temp = new int[n];
+        answer = -1;
         
         st = new StringTokenizer(br.readLine());
-        int[] A = new int[n];
-        temp = new int[n];
-        for(int i = 0 ; i<n; i++){
-            A[i] = Integer.parseInt(st.nextToken());
+        for(int i = 0; i<n; i++){
+            a[i] = Integer.parseInt(st.nextToken());
         }
+
+        merge_sort(a, 0, n-1);
+        System.out.println(answer);
         
-        merge_sort(A, 0, n-1);
-        
-        System.out.println(result);
     }
 }
