@@ -1,34 +1,34 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 class Main{
-    private static StringBuilder str;
-    private static void recursive(int start, int size){
-        if(size==1) return;
-        int newSize = size/3;
-        
-        for(int i = start+newSize; i<start+2*newSize; i++){
-            str.setCharAt(i, ' ');
+    private static StringBuilder sb;
+    private static void recursive(int n){
+        if(n==1){
+            sb.append("-");
         }
-        
-        recursive(start, newSize);
-        recursive(start+2*newSize, newSize);
-        
+        else{
+            recursive(n/3);
+            for(int i = 0; i<n/3; i++){
+                sb.append(" ");
+            }
+            recursive(n/3);
+        }
     }
     
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
+  
+        String input = "";
         
-        String input ="";
-        while((input=br.readLine())!= null && !input.isEmpty()){
-            int n = (int)Math.pow(3,Integer.parseInt(input));
-            str = new StringBuilder();
-            for(int i = 0; i<n; i++){
-                str.append("-");
-            }
-            recursive(0, n);
-            sb.append(str).append("\n");
+        while((input=br.readLine())!=null && !input.isEmpty()){
+            int n = Integer.parseInt(input);
+            n = (int)Math.pow(3,n);
+            
+            recursive(n);
+            
+            sb.append("\n");
         }
         
         System.out.println(sb);
