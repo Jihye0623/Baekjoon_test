@@ -6,8 +6,8 @@ def logic(n):
         dp[n] = max(max(logic(n-2), logic(n-3) + wine[n-2]) + wine[n-1], logic(n-1))     
     return dp[n] 
 
-n = int(sys .stdin.readline())    
-wine = [int(sys.stdin.readline()) for _ in range(n)]    
+n = int(input())    
+wine = [int(input()) for _ in range(n)]    
 dp = [None for _ in range(n+1)]     
 
 dp[0] = 0    
