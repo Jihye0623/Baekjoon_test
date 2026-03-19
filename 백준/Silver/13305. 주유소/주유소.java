@@ -18,8 +18,8 @@ class Main{
             city[i] = Integer.parseInt(st.nextToken());
         }
         
-        int total_cost = city[0] * road[0];
-        int current_cost = city[0];
+        long total_cost = city[0] * road[0];
+        long current_cost = city[0];
         
         for(int i = 1; i<n-1; i++){
             current_cost = Math.min(current_cost, city[i]);
