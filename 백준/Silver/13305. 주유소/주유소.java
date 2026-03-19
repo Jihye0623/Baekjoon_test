@@ -6,16 +6,16 @@ class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
         
-        int[] road = new int[n-1];
+        long[] road = new long[n-1];
         StringTokenizer st = new StringTokenizer(br.readLine());
         for(int i = 0; i<n-1; i++){
-            road[i] = Integer.parseInt(st.nextToken());
+            road[i] = Long.parseLong(st.nextToken());
         }
         
-        int[] city = new int[n];
+        long[] city = new long[n];
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i<n; i++){
-            city[i] = Integer.parseInt(st.nextToken());
+            city[i] = Long.parseLong(st.nextToken());
         }
         
         long total_cost = city[0] * road[0];
