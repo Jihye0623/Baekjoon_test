@@ -2,55 +2,54 @@ import java.util.*;
 import java.io.*;
 
 class Main{
-    private static int[][] arr;
-    private static StringBuilder sb = new StringBuilder();
+    private static int[][] map;
     
-    private static boolean check(int row, int col, int size){
+    private static void divide(int row, int col, int size){
         
-        int c = arr[row][col];
+        int num = map[row][col];
+        boolean flag = false;
         
         for(int i = row; i<row+size; i++){
             for(int j = col; j<col+size; j++){
-                if(arr[i][j] != c) return false;
+                if(num!=map[i][j]){
+                    flag = true;
+                    break;
+                }
             }
         }
         
-        return true;
-        
-    }
-    
-    private static void partition(int row, int col, int size){
-       
-       
-        if(check(row, col, size)){
-            sb.append(arr[row][col]);   
-            return ;
+        if(!flag){
+            sb.append(num);
+        }
+        else{
+            sb.append("(");
+
+            int newSize = size/2;
+            divide(row, col, newSize);
+            divide(row, col+newSize, newSize);
+            divide(row+newSize, col, newSize);
+            divide(row+newSize, col+newSize, newSize);   
+            sb.append(")");
         }
         
-        int newSize = size/2;
-        sb.append("(");
-        partition(row, col, newSize);
-        partition(row, col+ newSize, newSize);
-        partition(row + newSize, col, newSize);
-        partition(row + newSize, col + newSize, newSize);
-        
-        sb.append(")");
     }
     
+    private static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        arr = new int[n][n];
+        
+        map = new int[n][n];
         
         for(int i = 0; i<n; i++){
             String str = br.readLine();
             for(int j = 0; j<n; j++){
-                arr[i][j] = str.charAt(j) - '0';
+                map[i][j] = (int)(str.charAt(j) - '0');
             }
         }
+
+        divide(0,0,n);
         
-        partition(0,0,n);
-        System.out.println(sb);        
-		
+        System.out.println(sb);
     }
 }
