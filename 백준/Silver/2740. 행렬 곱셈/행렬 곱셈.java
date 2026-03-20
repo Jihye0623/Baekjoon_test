@@ -1,11 +1,11 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
+		int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         
         int[][] arrA = new int[n][m];
@@ -13,11 +13,11 @@ class Main{
             st = new StringTokenizer(br.readLine());
             for(int j = 0; j<m; j++){
                 arrA[i][j] = Integer.parseInt(st.nextToken());
-            }
+            }    
         }
         
         st = new StringTokenizer(br.readLine());
-        m = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
         
         int[][] arrB = new int[m][k];
@@ -25,20 +25,21 @@ class Main{
             st = new StringTokenizer(br.readLine());
             for(int j = 0; j<k; j++){
                 arrB[i][j] = Integer.parseInt(st.nextToken());
-            }
+            }    
         }
         
         int[][] answer = new int[n][k];
+        
         for(int i = 0; i<n; i++){
             for(int j = 0; j<k; j++){
-                for(int t = 0; t<m; t++){
-                    answer[i][j] += arrA[i][t] * arrB[t][j];
+                for(int p = 0; p<m; p++){
+                    answer[i][j] += arrA[i][p] * arrB[p][j];
                 }
             }
         }
         
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i<n; i++){
+          for(int i = 0; i<n; i++){
             for(int j = 0; j<k; j++){
                 sb.append(answer[i][j]).append(" ");
             }
@@ -46,7 +47,5 @@ class Main{
         }
         
         System.out.println(sb);
-        
-        
     }
 }
