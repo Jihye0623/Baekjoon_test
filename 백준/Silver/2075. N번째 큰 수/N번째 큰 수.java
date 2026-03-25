@@ -1,21 +1,22 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 class Main{
-    public static void main(String[] args)throws IOException{
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        ArrayList<Integer> arr = new ArrayList<>();
-
+        
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        
         for(int i = 0; i<n; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
             for(int j = 0; j<n; j++){
-                arr.add(Integer.parseInt(st.nextToken()));
+                pq.add(Integer.parseInt(st.nextToken()));
             }
         }
         
-        Collections.sort(arr, Collections.reverseOrder());
-        System.out.println(arr.get(n-1));
+        for(int i = 0; i<n-1; i++) pq.poll();
         
+        System.out.println(pq.poll());
     }
 }
