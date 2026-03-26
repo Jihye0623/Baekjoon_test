@@ -1,12 +1,12 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 class Main{
-    private static int[] dx = {-1,1,0,0};
-    private static int[] dy = {0,0,-1,1};
-    private static int M, N, answer;
+    private static int M,N;
     private static int[][] map;
     private static boolean[][] visited;
+    private static int[] dx = {0,0,-1,1};
+    private static int[] dy = {-1,1,0,0};
     
     private static class Node{
         int x, y;
@@ -22,13 +22,12 @@ class Main{
         for(int i = 0; i<4; i++){
             int nx = now.x + dx[i];
             int ny = now.y + dy[i];
-            if(nx<0 || nx>=M || ny <0 || ny >=N) continue;
-            if(visited[nx][ny]) continue;
-            if(map[nx][ny]==0) continue; 
             
-            dfs(new Node(nx, ny));
+            if(nx<0 || ny<0 || nx>=M || ny>=N) continue;
+            if(visited[nx][ny] || map[nx][ny]==0) continue;
+            
+            dfs(new Node(nx,ny));
         }
-            
     }
     
     public static void main(String[] args) throws IOException{
@@ -36,36 +35,37 @@ class Main{
         int T = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
         
+        StringTokenizer st;
+        
         for(int t = 0; t<T; t++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
+            st = new StringTokenizer(br.readLine());    
             M = Integer.parseInt(st.nextToken());
             N = Integer.parseInt(st.nextToken());
             int K = Integer.parseInt(st.nextToken());
-            
             map = new int[M][N];
             visited = new boolean[M][N];
             
             for(int i = 0; i<K; i++){
-                st = new StringTokenizer(br.readLine());
-                int X = Integer.parseInt(st.nextToken());
-                int Y = Integer.parseInt(st.nextToken());
-                map[X][Y] = 1;
+                st = new StringTokenizer(br.readLine());   
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
+                map[x][y] = 1;
             }
-
-            int cnt = 0;
             
+            int cnt = 0;
             for(int i = 0; i<M; i++){
                 for(int j = 0; j<N; j++){
-                    if(map[i][j]==1 && !visited[i][j]){ 
-                        dfs(new Node(i,j));
+                    if(map[i][j]==1 && !visited[i][j]){
+                        dfs(new Node(i,j));   
                         cnt++;
                     }
                 }
             }
-
             sb.append(cnt).append("\n");
+            
         }
         
         System.out.println(sb);
+		    
     }
 }
