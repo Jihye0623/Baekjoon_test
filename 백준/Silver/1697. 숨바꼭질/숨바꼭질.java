@@ -15,7 +15,7 @@ class Main{
         }
         
         boolean[] visited = new boolean[100001];
-        Queue<int[]> queue = new LinkedList<>();
+        ArrayDeque<int[]> queue = new ArrayDeque<>();
         queue.add(new int[]{N,0});
         visited[N] = true;
         
