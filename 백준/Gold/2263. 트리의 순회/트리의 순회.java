@@ -1,24 +1,24 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 class Main{
-    
-    private static int[] in, post, inIndex;
     private static StringBuilder sb = new StringBuilder();
+    
+    private static int[] post, inIndex;
     
     private static void getPreOrder(int inStart, int inEnd, int postStart, int postEnd){
         if(inStart>inEnd || postStart>postEnd) return;
         
-        int root = post[postEnd];
+        int end = post[postEnd];
+        sb.append(end).append(" ");
         
-        sb.append(root).append(" ");
+        int endIndex = inIndex[end];
+        int size = endIndex - inStart;
         
-        int rootIdx = inIndex[root];
+        getPreOrder(inStart, endIndex-1, postStart, postStart+size-1);
         
-        int leftSize = rootIdx - inStart;
+        getPreOrder(endIndex+1,inEnd, postStart+size, postEnd-1);
         
-        getPreOrder(inStart, rootIdx-1, postStart, postStart+leftSize-1);
-        getPreOrder(rootIdx+1, inEnd, postStart+leftSize, postEnd - 1);
         
     }
     
@@ -26,15 +26,12 @@ class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
         
-        in = new int[n+1];
         post = new int[n+1];
         inIndex = new int[n+1];
         
-        
         StringTokenizer st = new StringTokenizer(br.readLine());
         for(int i = 1; i<=n; i++){
-            in[i] = Integer.parseInt(st.nextToken());
-            inIndex[in[i]] = i;
+            inIndex[Integer.parseInt(st.nextToken())] = i;
         }
         
         st = new StringTokenizer(br.readLine());
@@ -42,9 +39,9 @@ class Main{
             post[i] = Integer.parseInt(st.nextToken());
         }
         
-        getPreOrder(1, n, 1, n);
+        getPreOrder(1,n,1,n);
+        
         System.out.println(sb);
         
-		
     }
 }
