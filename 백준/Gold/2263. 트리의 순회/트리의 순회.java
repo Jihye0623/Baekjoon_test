@@ -1,9 +1,8 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 class Main{
-    private static StringBuilder sb = new StringBuilder();
-    
+    static StringBuilder sb = new StringBuilder();
     private static int[] post, inIndex;
     
     private static void getPreOrder(int inStart, int inEnd, int postStart, int postEnd){
@@ -16,10 +15,7 @@ class Main{
         int size = endIndex - inStart;
         
         getPreOrder(inStart, endIndex-1, postStart, postStart+size-1);
-        
-        getPreOrder(endIndex+1,inEnd, postStart+size, postEnd-1);
-        
-        
+        getPreOrder(endIndex+1, inEnd, postStart+size, postEnd-1);
     }
     
     public static void main(String[] args) throws IOException{
@@ -31,17 +27,17 @@ class Main{
         
         StringTokenizer st = new StringTokenizer(br.readLine());
         for(int i = 1; i<=n; i++){
-            inIndex[Integer.parseInt(st.nextToken())] = i;
+            int k = Integer.parseInt(st.nextToken());
+            inIndex[k] = i;
         }
         
         st = new StringTokenizer(br.readLine());
         for(int i = 1; i<=n; i++){
-            post[i] = Integer.parseInt(st.nextToken());
+            int k = Integer.parseInt(st.nextToken());
+            post[i] = k;
         }
         
         getPreOrder(1,n,1,n);
-        
         System.out.println(sb);
-        
     }
 }
