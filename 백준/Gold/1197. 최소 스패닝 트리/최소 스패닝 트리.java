@@ -4,22 +4,22 @@ import java.io.*;
 class Main{
     private static int[] parent;
     
-    private static class Edge{
-        int from, to, weight;
+    private static class Node{
+        int from, to, cost;
         
-        public Edge(int from, int to, int weight){
+        public Node(int from, int to, int cost){
             this.from = from;
             this.to = to;
-            this.weight = weight;
+            this.cost = cost;
         }
     }
     
-    static int find(int x){
+    private static int find(int x){
         if(x==parent[x]) return x;
         return parent[x] = find(parent[x]);
     }
     
-    static boolean union(int a, int b){
+    private static boolean union(int a, int b){
         int pa = find(a);
         int pb = find(b);
         
@@ -30,45 +30,47 @@ class Main{
         
         return false;
     }
-
     
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-		int v = Integer.parseInt(st.nextToken());
+		
+        int v = Integer.parseInt(st.nextToken());
         int e = Integer.parseInt(st.nextToken());
-        
+        ArrayList<Node> graph = new ArrayList<>();
         parent = new int[v+1];
-        for(int i = 1; i<=v; i++) parent[i] = i;
-        
-        ArrayList<Edge> edgeList = new ArrayList<>();
-        for(int i = 0; i<e; i++){
-            st = new StringTokenizer(br.readLine());
-	    	int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
-            edgeList.add(new Edge(a,b,w));
+        for(int i = 0; i<=v; i++){
+            parent[i] = i;
         }
         
-        Collections.sort(edgeList, new Comparator<Edge>(){
+        
+        for(int i = 0; i<e; i++){
+            st = new StringTokenizer(br.readLine());
+            
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
+            
+            graph.add(new Node(a,b,c));
+        }
+        
+        Collections.sort(graph, new Comparator<Node>(){
             @Override
-            public int compare(Edge o1, Edge o2){
-                return Integer.compare(o1.weight, o2.weight);
+            public int compare(Node o1, Node o2){
+                return Integer.compare(o1.cost, o2.cost);
             }
         });
         
-        long totalWeight = 0;
-        int count = 0;
+        int cnt = 0;
+        int total = 0;
         
-        for(Edge edge:edgeList){
-            if(union(edge.from, edge.to)){
-                totalWeight += edge.weight;
-                count++;
-                
-                if(count==v-1) break;
+        for(Node node:graph){
+            if(union(node.from, node.to)){
+                total+= node.cost;
+                if(cnt==v-1) break;   
             }
         }
         
-        System.out.println(totalWeight);
+        System.out.println(total);
     }
 }
