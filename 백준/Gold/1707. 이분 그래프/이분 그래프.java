@@ -16,12 +16,12 @@ class Main{
             
             for(int next:graph.get(now)){
                 if(colors[next]==0){
-                    colors[next] = (colors[now] == 1) ? 2:1;
+                    colors[next] = (colors[now]==1)? 2:1;
                     queue.add(next);
                 }
-                else if(colors[next] == colors[now]){
+                else if(colors[next]==colors[now]){
                     isBipartite = false;
-                    return ; 
+                    return;
                 }
             }
         }
@@ -47,13 +47,13 @@ class Main{
                 st = new StringTokenizer(br.readLine());
                 int U = Integer.parseInt(st.nextToken());
                 int V = Integer.parseInt(st.nextToken());
+                
                 graph.get(U).add(V);
                 graph.get(V).add(U);
             }
             
             colors = new int[v+1];
             isBipartite = true;
-            
             
             for(int i = 1; i<=v; i++){
                 if(!isBipartite) break;
@@ -63,9 +63,6 @@ class Main{
             if(isBipartite) sb.append("YES\n");
             else sb.append("NO\n");
         }
-        
         System.out.println(sb);
-		    
-       
     }
 }
