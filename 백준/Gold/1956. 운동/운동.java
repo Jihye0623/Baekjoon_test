@@ -2,14 +2,22 @@ import java.util.*;
 import java.io.*;
 
 class Main{
-    private static final int INF = 20000000;
+    static final int INF = 20000000;
+    private static class Edge{
+        int from, to, cost;
+        public Edge(int from, int to, int cost){
+            this.from = from;
+            this.to = to;
+            this.cost = cost;
+        }
+    }
     
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-		int v = Integer.parseInt(st.nextToken());
+		
+        int v = Integer.parseInt(st.nextToken());
         int e = Integer.parseInt(st.nextToken());
-        
         
         int[][] dist = new int[v+1][v+1];
         for(int i = 1; i<=v; i++){
@@ -17,10 +25,10 @@ class Main{
                 dist[i][j] = INF;
             }
         }
-        
         for(int i = 0; i<e; i++){
             st = new StringTokenizer(br.readLine());
-	    	int a = Integer.parseInt(st.nextToken());
+        
+            int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
             
