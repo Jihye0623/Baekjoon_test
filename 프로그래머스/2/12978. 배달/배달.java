@@ -1,48 +1,50 @@
 import java.util.*;
 
 class Solution {
-    private static class Node{
-        int num, cost;
-        public Node(int num, int cost){
-            this.num = num;
+    public static class Node{
+        int dest, cost;
+        public Node(int dest, int cost){
+            this.dest = dest;
             this.cost = cost;
         }
     }
     
-    private static ArrayList<Node>[] adjList;
     public int solution(int N, int[][] road, int K) {
-        adjList = new ArrayList[N+1];
-        for(int i = 1; i<N+1; i++) adjList[i] = new ArrayList<>();
+        int answer = 0;
         
-        for(int[] r:road){
-            adjList[r[0]].add(new Node(r[1],r[2]));
-            adjList[r[1]].add(new Node(r[0],r[2]));
+        ArrayList<Node>[] adjList = new ArrayList[N+1];
+        for(int i = 0; i<=N; i++){
+            adjList[i] = new ArrayList<>();
+        }
+        
+        for(int[] edge:road){
+            adjList[edge[0]].add(new Node(edge[1], edge[2]));
+            adjList[edge[1]].add(new Node(edge[0], edge[2]));
         }
         
         int[] dist = new int[N+1];
         Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[1] = 0;
-        PriorityQueue<Node> pq = new PriorityQueue<>((o1,o2)->Integer.compare(o1.cost, o2.cost));
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2)-> Integer.compare(o1.cost, o2.cost));
         pq.add(new Node(1,0));
+        dist[1] = 0;
         
         while(!pq.isEmpty()){
             Node now = pq.poll();
-            if(now.cost > dist[now.num]) continue;
             
-            for(Node next:adjList[now.num]){
-                if(dist[next.num]>now.cost+next.cost){
-                    dist[next.num] = now.cost+next.cost;
-                    pq.add(new Node(next.num, dist[next.num]));
+            if(dist[now.dest]<now.cost) continue;
+            
+            for(Node next:adjList[now.dest]){
+                if(dist[next.dest] > now.cost + next.cost){
+                    dist[next.dest] = now.cost + next.cost;
+                    pq.add(new Node(next.dest, dist[next.dest]));
                 }
             }
         }
+
         
-        int cnt = 0;
-        for(int d:dist){
-            if(d<=K) cnt++;
+        for(int i = 1; i<=N; i++){
+            if(dist[i]<=K) answer++;
         }
-        
-        return cnt;
-        
+        return answer;
     }
 }
