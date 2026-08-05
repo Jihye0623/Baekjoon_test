@@ -1,32 +1,33 @@
-import java.util.*;
-
 class Solution {
+    private static int N;
     private static boolean[] width;
-    private static boolean[] q1;
-    private static boolean[] q2;
-    private static int N, answer;
-    private static int queen(int w){
+    private static boolean[] diagonal1;
+    private static boolean[] diagonal2;
+    
+    private static int getAns(int y){
         int ans = 0;
-        if(w==N) ans++;
+        if(y==N){
+            ans++;
+        }
         else{
             for(int i = 0; i<N; i++){
-                if(!width[i] && !q1[i+w] && !q2[i-w+N]){
-                    width[i] = q1[i+w] = q2[i-w+N] = true;
-                    ans += queen(w+1);
-                    width[i] = q1[i+w] = q2[i-w+N] = false;
-                }
+                if(width[i] || diagonal1[i+y] || diagonal2[i-y+N]) continue;
+                width[i] = diagonal1[i+y] = diagonal2[i-y+N] = true;
+                ans+=getAns(y+1);
+                width[i] = diagonal1[i+y] = diagonal2[i-y+N] = false;
             }
         }
+        
         return ans;
+        
     }
     
     public int solution(int n) {
         N = n;
         width = new boolean[n];
-        q1 = new boolean[n*2];
-        q2 = new boolean[n*2];
-               
-        answer = queen(0);
+        diagonal1 = new boolean[n*2];
+        diagonal2 = new boolean[n*2];
+        int answer = getAns(0);
         
         return answer;
     }
