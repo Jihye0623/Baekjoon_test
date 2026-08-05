@@ -1,7 +1,6 @@
 import java.util.*;
 
 class Solution {
-    private static int[][][] visited;
     private static class Node{
         int x, y, direction, cost;
         public Node(int x, int y, int direction, int cost){
@@ -12,44 +11,57 @@ class Solution {
         }
     }
     
-    private static int[] dx = {0,-1,0,1};
-    private static int[] dy = {-1,0,1,0};
+    private static final int[] rx = {0,-1,0,1};
+    private static final int[] ry = {-1,0,1,0};
+    private static int N;
+    private static int[][][] visited;
     
+    private static boolean isValid(int x, int y){
+        return 0<=x && x<N && 0<=y && y<N;
+    }
     
-    private static int calCost(int prevDirect, int direct, int nowCost){
-        if(prevDirect == -1 || (prevDirect-direct)%2==0) return nowCost + 100;
-        else return nowCost+600;
+    private static boolean isBlocked(int[][] board, int x, int y){
+        return (x==0 && y==0) || !isValid(x,y) || board[x][y] == 1;
+    }
+    
+    private static int calculateCost(int direction, int prevDirection, int cost){
+        if(prevDirection == -1 || (prevDirection - direction)%2 == 0)
+            return cost + 100;
+        return cost + 600;
     }
     
     private static boolean isShouldUpdate(int x, int y, int direction, int newCost){
-        return visited[x][y][direction] ==0 || visited[x][y][direction] > newCost;
+        return visited[x][y][direction] == 0 || visited[x][y][direction] > newCost;
     }
     
     public int solution(int[][] board) {
-        int N = board.length;
+        ArrayDeque<Node> queue = new ArrayDeque<>();
+        queue.add(new Node(0,0,-1,0));
+        N = board.length;
         visited = new int[N][N][4];
+        
         int answer = Integer.MAX_VALUE;
         
-        ArrayDeque<Node> deque = new ArrayDeque<>();
-        deque.add(new Node(0,0,-1,0));
-        
-        while(!deque.isEmpty()){
-            Node now = deque.poll();
+        while(!queue.isEmpty()){
+            Node now = queue.poll();
             
             for(int i = 0; i<4; i++){
-                int nx = now.x+dx[i];
-                int ny = now.y+dy[i];
+                int newX = now.x + rx[i];
+                int newY = now.y + ry[i];
                 
-                // 벽이거나 범위를 넘어간 경우
-                if(nx<0||ny<0||nx>=N||ny>=N) continue;
-                if(board[nx][ny]==1) continue;
+                if(isBlocked(board, newX, newY)){
+                    continue;
+                }
                 
-                int newCost = calCost(now.direction, i, now.cost);
-                if(nx == N-1 && ny == N-1) answer = Math.min(newCost, answer);
-                else if(isShouldUpdate(nx,ny,i, newCost)){
-                    deque.add(new Node(nx,ny,i,newCost));
-                    visited[nx][ny][i] = newCost;
-                }                    
+                int newCost = calculateCost(i, now.direction, now.cost);
+                
+                if(newX == N-1 && newY==N-1){
+                    answer = Math.min(answer, newCost);
+                }
+                else if(isShouldUpdate(newX, newY, i, newCost)){
+                    queue.add(new Node(newX, newY, i, newCost));
+                    visited[newX][newY][i] = newCost;
+                }
             }
         }
         
