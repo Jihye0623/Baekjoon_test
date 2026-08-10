@@ -1,4 +1,3 @@
--- 코드를 작성해주세요 
-select count(*) COUNT
-from ecoli_data
-where (genotype & 4 OR genotype & 1) and not genotype &2
+SELECT COUNT(*)
+FROM ECOLI_DATA
+WHERE (GENOTYPE & 4 OR GENOTYPE & 1) AND NOT GENOTYPE & 2
